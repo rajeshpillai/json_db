@@ -1,4 +1,5 @@
 const fs = require('fs');
+const crypto = require('crypto');
 const express = require('express');
 const cors = require('cors');
 const app = express();
@@ -12,6 +13,11 @@ app.use(
   express.urlencoded({
     extended: false
 }));
+
+// Generate random ID.
+function randomId() {
+    return crypto.randomBytes(4).toString('hex');
+}
 
 app.post("/db", (req, res) => {
     const db  = req.body.dbname;
