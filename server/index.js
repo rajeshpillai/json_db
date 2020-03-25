@@ -19,21 +19,6 @@ function randomId() {
     return crypto.randomBytes(4).toString('hex');
 }
 
-app.post("/db", (req, res) => {
-    const db  = req.body.dbname;
-    const full_path = __dirname + `/db/${db}.json`;
-    console.log(full_path);
-
-    try {
-        if (!fs.existsSync(full_path)) {
-            fs.writeFileSync(full_path, JSON.stringify([]));
-        }
-    }catch (e) {
-        console.error(e);
-    }
-    res.json({url: req.url});
-});
-  
 async function read(model) {
     const url = __dirname + `/db/${model}.json`;
     return JSON.parse(
@@ -48,6 +33,21 @@ async function write(model_name, data) {
     await fs.promises.writeFile(url, JSON.stringify(data, null, 2));
 }
 
+app.post("/db", (req, res) => {
+    const db  = req.body.dbname;
+    const full_path = __dirname + `/db/${db}.json`;
+    console.log(full_path);
+
+    try {
+        if (!fs.existsSync(full_path)) {
+            fs.writeFileSync(full_path, JSON.stringify([]));
+        }
+    }catch (e) {
+        console.error(e);
+    }
+    res.json({url: req.url});
+});
+
 app.post("/db/:model", async (req, res) => {
     const model_name  = req.params.model;
     const file_path = __dirname + `/db/${model_name}.json`;
@@ -59,6 +59,13 @@ app.post("/db/:model", async (req, res) => {
     await write(model_name, table);
     res.json({[model_name]: table});
 });
+
+app.get("/db/:model", async (req, res) => {
+    const model_name  = req.params.model;
+    const file_path = __dirname + `/db/${model_name}.json`;
+    const table  = await read(model_name);
+    res.json({[model_name]: table});
+})
 
 app.get("*", (req, res) => {
     res.json({url: req.url});
