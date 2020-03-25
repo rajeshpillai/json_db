@@ -15,8 +15,6 @@ app.use(
     extended: false
 }));
 
-
-
 app.post("/db", (req, res) => {
     const db  = req.body.dbname;
     const full_path = __dirname + `/db/${db}.json`;
