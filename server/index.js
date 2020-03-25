@@ -54,7 +54,7 @@ app.post("/db/:model", async (req, res) => {
     const table  = await read(model_name);
     const data = req.body;
     console.log("Data: ", data);
-
+    data.id = randomId();
     table.push(data);
     await write(model_name, table);
     res.json({[model_name]: table});
