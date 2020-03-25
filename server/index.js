@@ -65,7 +65,19 @@ app.get("/db/:model", async (req, res) => {
     const file_path = __dirname + `/db/${model_name}.json`;
     const table  = await read(model_name);
     res.json({[model_name]: table});
-})
+});
+
+app.get("/db/:model/:id", async (req, res) => {
+    const model_name  = req.params.model;
+    const id = req.params.id;
+    const file_path = __dirname + `/db/${model_name}.json`;
+    const table  = await read(model_name);
+
+    let record = table.find(r => r.id === id);
+    res.json(record);
+});
+
+
 
 app.get("*", (req, res) => {
     res.json({url: req.url});
