@@ -9,8 +9,8 @@ axios.post(DB_URL + "/db", {
 .then(response => console.log(response.data))
 
 // Create records
-axios.post(DB_URL + "/users", {
-    username: "rajesh",
+axios.post(DB_URL + "/db/users", {
+    username: "rajesh" + +new Date(),
     email: "abc@test.com"
 })
 .then(response => console.log(response.data))

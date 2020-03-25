@@ -28,6 +28,32 @@ app.post("/db", (req, res) => {
     res.json({url: req.url});
 });
   
+async function read(model) {
+    const url = __dirname + `/db/${model}.json`;
+    return JSON.parse(
+        await fs.promises.readFile(url, {
+            encoding: 'utf8'
+        })
+    );
+}
+
+async function write(model_name, data) {
+    const url = __dirname + `/db/${model_name}.json`;
+    await fs.promises.writeFile(url, JSON.stringify(data));
+}
+
+app.post("/db/:model", async (req, res) => {
+    const model_name  = req.params.model;
+    const file_path = __dirname + `/db/${model_name}.json`;
+    const table  = await read(model_name);
+    const data = req.body;
+    console.log("Data: ", data);
+
+    table.push(data);
+    await write(model_name, table);
+    res.json({[model_name]: table});
+});
+
 app.get("*", (req, res) => {
     res.json({url: req.url});
 });
