@@ -39,7 +39,7 @@ async function read(model) {
 
 async function write(model_name, data) {
     const url = __dirname + `/db/${model_name}.json`;
-    await fs.promises.writeFile(url, JSON.stringify(data));
+    await fs.promises.writeFile(url, JSON.stringify(data, null, 2));
 }
 
 app.post("/db/:model", async (req, res) => {
