@@ -8,6 +8,14 @@ axios.post(DB_URL + "/db", {
 })
 .then(response => console.log(response.data))
 
+// Create records
+axios.post(DB_URL + "/users", {
+    username: "rajesh",
+    email: "abc@test.com"
+})
+.then(response => console.log(response.data))
+
+
 // GET all users
 axios.get(DB_URL + "/users")
   .then(response => console.log(response.data))
