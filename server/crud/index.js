@@ -7,7 +7,6 @@ function randomId() {
 }
 
 async function read(url) {
-    console.log(`Reading ${url}`);
     return JSON.parse(
         await fs.promises.readFile(url, {
             encoding: 'utf8'

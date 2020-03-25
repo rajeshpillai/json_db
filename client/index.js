@@ -17,6 +17,20 @@ axios.post(DB_URL + "/db/users", {
 
 
 // GET all users
-axios.get(DB_URL + "/users")
+axios.get(DB_URL + "/db/users")
   .then(response => console.log(response.data))
   .catch(e => console.error(e));
+
+// Delete by username
+// axios.delete(DB_URL + "/db/users/", {
+//         data: {
+//             username: "rajesh1585130489355"
+//         }
+//     })
+//   .then(response => console.log(response.data))
+//   .catch(e => console.error(e));
+
+// Default delete by id
+axios.delete(DB_URL + "/db/users/be4802f9")
+    .then(response => console.log(response.data))
+    .catch(e => console.error(e));
