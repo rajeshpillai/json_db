@@ -1,4 +1,5 @@
 const axios = require("axios");
+const api = require('../server/api');
 
 const DB_URL = "http://localhost:4444";
 
@@ -6,7 +7,18 @@ const DB_URL = "http://localhost:4444";
 axios.post(DB_URL + "/db", {
     dbname: 'users'
 })
-.then(response => trialRun())
+.then(response => trialRun());
+
+trialRun2();
+
+function trialRun2() {
+    let db = api.createTable("blogs");
+    console.log("CREATING BLOG TABLE");
+    db.insert({
+        title: `Blog ${+new Date()}`,
+        published: true
+    });
+}
 
 function trialRun() {
 
